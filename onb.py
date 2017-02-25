@@ -39,3 +39,10 @@ class ONB(object):
 	# Builds a 3x3 matrix from vectors u, v and w.
 	def setBasisMatrix(self):
 		self.mat3x3 = [[self.u.x, self.u.y, self.u.z], [self.v.x, self.v.y, self.v.z], [self.w.x, self.w.y, self.w.z]]
+
+	# Multiply a 3x3 matrix and a 3x1 vector
+	def multMatrixVec3(self, value):
+		if isinstance(value, glm.vec3):
+			return glm.vec3((self.mat3x3[0][0] * value.x + self.mat3x3[0][1] * value.y + self.mat3x3[0][2] * value.z),
+				(self.mat3x3[1][0] * value.x + self.mat3x3[1][1] * value.y + self.mat3x3[1][2] * value.z),
+				(self.mat3x3[2][0] * value.x + self.mat3x3[2][1] * value.y + self.mat3x3[2][2] * value.z))

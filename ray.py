@@ -15,4 +15,4 @@ class Ray(object):
 			self.origin, self.direction = args
 		else:
 			self.origin = glm.vec3(.0, .0, .0)
-			self.direction = (.0, .0, .0)
+			self.direction = glm.vec3(.0, .0, .0)
