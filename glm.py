@@ -58,26 +58,26 @@ class vec3(object):
 			self.y = .0
 			self.z = .0
 
-	# Handling Multiplication of vec3 Objects:
-	def __imul__(self, value):
+	# Handling Addition of vec3 Objects:
+	def __add__(self, value):
 		if isinstance(value, vec3):
-			self.x *= value.x
-			self.y *= value.y
-			self.z *= value.z
+			return vec3(self.x + value.x, self.y + value.y, self.z + value.z)
 		else:
-			self.x *= value
-			self.y *= value
-			self.z *= value
-		return self
+			return vec3(self.x + value, self.y + value, self.z + value)
 
+	# Handling Subtraction of vec3 Objects:
+	def __sub__(self, value):
+		if isinstance(value, vec3):
+			return vec3(self.x - value.x, self.y - value.y, self.z - value.z)
+		else:
+			return vec3(self.x - value, self.y - value, self.z - value)
+
+	# Handling Multiplication of vec3 Objects:
 	def __mul__(self, value):
 		if isinstance(value, vec3):
 			return vec3(self.x * value.x, self.y * value.y, self.z * value.z)
 		else:
 			return vec3(self.x * value, self.y * value, self.z * value)
-
-	def __rmul__(self, value):
-		return vec3(value * self.x, value * self.y, value * self.z)
 		
 # Cross Product of Two vec3 Objects
 def cross(first, second):
