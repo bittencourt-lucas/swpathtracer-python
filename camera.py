@@ -20,5 +20,5 @@ class Camera(object):
 			self.up = glm.vec3(.0, .0, .0)
 			self.look_at = glm.vec3(.0, .0, .0)
 		self.direction = glm.normalize((self.look_at - self.position))
-		self.onb_cam = onb.ONB()
-		self.onb_cam.setFromUW(glm.normalize(glm.cross(self.up, self.direction * (-1))), self.direction * (-1))
+		self.onb = onb.ONB()
+		self.onb.setFromUW(glm.normalize(glm.cross(self.up, self.direction * (-1))), self.direction * (-1))
