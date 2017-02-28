@@ -1,9 +1,16 @@
 # swpathtracer-python
 
-Baseado no Template do Prof. Dr. Christian Azambuja Pagot, que pode ser encontrado em:
+The Template for this program was made by Prof. PhD. Christian Azambuja Pagot, and it can be found here:
 https://github.com/capagot/RT-Template
 
-O arquivo glm.py é baseado na biblioteca GLM (OpenGL Mathematics) que pode ser encontrada em:
+glm.py is based on GLM (OpenGL Mathematics) library which can be found here:
 http://glm.g-truc.net/0.9.8/index.html
 
-V1: Câmera Ortográfica capaz de renderizar esferas e triângulos.
+UPDATE 1.0: Ortographic Camera capable of rendering spheres.
+UPDATE 1.1: The Ortographic Camera can now render triangles.
+
+
+Using this program:
+
+Clone all files and run the following command on a Terminal (or any Python3 interpreter):
+python3 swpathtracer-python
