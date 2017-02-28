@@ -5,6 +5,8 @@ import glm
 class ONB(object):
 	"""
 	Orthonormal Basis
+	This class creates an identity 3x3 matrix, and it'll handle
+	some matrix calculations.
 	"""
 	def __init__(self):
 		# Default ONB is the standard orthonormal basis.

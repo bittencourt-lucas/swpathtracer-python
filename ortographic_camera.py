@@ -5,7 +5,11 @@ import ray
 import camera
 
 class OrtographicCamera(camera.Camera):
-	"""docstring for OrtographicCamera"""
+	"""
+	OrtographicCamera
+	This inherits from the Camera class, and it'll create an Ortographic
+	Camera, which will render a scene without depth or 3D perspective.
+	"""
 	def __init__(self, *args, **kwargs):
 		if kwargs:
 			self.min_x = kwargs.get('min_x', 0.0)
@@ -22,6 +26,7 @@ class OrtographicCamera(camera.Camera):
 			self.max_y = 0.0
 			self.camera = camera.Camera(glm.ivec2(0, 0), glm.vec3(.0, .0, .0), glm.vec3(.0, .0, .0), glm.vec3(.0, .0, .0))
 
+	# This will send "rays" from the scene to the camera
 	def getWorldSpaceRay(self, pixel_coord):
 		width = self.max_x - self.min_x
 		height = self.max_y - self.min_y

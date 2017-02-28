@@ -94,7 +94,7 @@ def dot(first, second):
 		dotproduct = first * second
 		return dotproduct.x + dotproduct.y + dotproduct.z
 
-# Inverse Square Root
+# Inverse Square Root (used on normalize())
 def inversesqrt(value):
 	if isinstance(value, float):
 		return (1.0 / sqrt(value))

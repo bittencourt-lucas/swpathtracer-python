@@ -4,7 +4,7 @@ import glm
 
 class Ray(object):
 	"""
-	Ray (origin = vec3, direction = vec3 )
+	Ray (origin (vec3), direction (vec3) )
 	Determines the origin and direction of the rays.
 	"""
 	def __init__(self, *args, **kwargs):

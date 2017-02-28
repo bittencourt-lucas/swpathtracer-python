@@ -5,7 +5,12 @@ import onb
 import ray
 
 class Camera(object):
-	"""docstring for Camera"""
+	"""
+	Camera ( resolution(ivec2), position(vec3), up(vec3), look_at(vec3) )
+	This is a general Camera, we'll be using the Ortographic
+	(and later the Perspective) Camera classes to handle the
+	camera.
+	"""
 	def __init__(self, *args, **kwargs):
 		if kwargs:
 			self.resolution = kwargs.get('resolution', glm.ivec2(0, 0))
@@ -19,6 +24,14 @@ class Camera(object):
 			self.position = glm.vec3(.0, .0, .0)
 			self.up = glm.vec3(.0, .0, .0)
 			self.look_at = glm.vec3(.0, .0, .0)
+
+		# Camera direction
 		self.direction = glm.normalize((self.look_at - self.position))
+
+		# The camera uses an orthonormal basis
 		self.onb = onb.ONB()
 		self.onb.setFromUW(glm.normalize(glm.cross(self.up, self.direction * (-1))), self.direction * (-1))
+
+	# "Virtual" method for the Camera class
+	def getWorldSpaceRay(self, pixel_coord):
+		pass
