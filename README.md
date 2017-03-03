@@ -21,6 +21,15 @@ UPDATE 3.1: Now renders with random colors on each primitive.
 
 Using this program:
 
+First, you need the following Python libs:
+
+pyassimp
+
+pygame
+
+numpy
+
+
 Clone all files and run the following command on a Terminal (or any Python3 interpreter):
 
 python3 swpathtracer-python
