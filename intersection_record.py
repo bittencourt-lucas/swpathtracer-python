@@ -13,9 +13,11 @@ class IntersectionRecord(object):
 			self.t = kwargs.get('t', 0.0)
 			self.position = kwargs.get('position', glm.vec3(.0, .0, .0))
 			self.normal = kwargs.get('normal', glm.vec3(.0, .0, .0))
+			self.color = kwargs.get('color', glm.vec3(.0, .0, .0))
 		elif args:
-			self.t, self.position, self.normal = args
+			self.t, self.position, self.normal, self.color = args
 		else:
 			self.t = 0.0
 			self.position = glm.vec3(.0, .0, .0)
 			self.normal = glm.vec3(.0, .0, .0)
+			self.color = glm.vec3(.0, .0, .0)

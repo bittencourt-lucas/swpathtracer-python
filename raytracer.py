@@ -7,6 +7,7 @@ import scene
 import ray
 import intersection_record as ir
 import sys
+from random import random
 
 class RayTracer(object):
 	"""
@@ -44,8 +45,7 @@ class RayTracer(object):
 				inter_rec.t = sys.float_info.max
 				my_ray = self.camera.getWorldSpaceRay(glm.vec2(x + 0.5, y + 0.5))
 				if self.scene.intersect(my_ray, inter_rec):
-					inter_rec = self.scene.color(my_ray, inter_rec)
-					self.buffer.buffer_data[x][y] = glm.vec3(inter_rec.t * 0.2, inter_rec.t * 0.2, inter_rec.t * 0.2)
+					self.buffer.buffer_data[x][y] = inter_rec.color
 		print("\nDONE!", file=sys.stderr)
 
 # This function is merely updating the progress text on the Terminal

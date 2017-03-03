@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import glm
+from random import random
 
 class Triangle(object):
 	"""
@@ -18,6 +19,7 @@ class Triangle(object):
 			self.vertex1 = glm.vec3(.0, .0, .0)
 			self.vertex2 = glm.vec3(.0, .0, .0)
 			self.vertex3 = glm.vec3(.0, .0, .0)
+		self.color = glm.vec3(((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0)
 
 	# The intersection function can be found at Peter Shirley's Realistic Ray Tracing
 	def intersect(self, my_ray, inter_rec):
@@ -34,20 +36,29 @@ class Triangle(object):
 		k = self.vertex1.y - my_ray.origin.y
 		l = self.vertex1.z - my_ray.origin.z
 
-		M = a * (e * i - h * f) + b * (g * f - d * i) + c * (d * h - e * g)
-		t = -(f * (a * k - j * b) + e * (j * c - a * l) + d * (b * l - k * c)) / M
+		ei_minus_hf = float(e * i - h * f)
+		gf_minus_di = float(g * f - d * i)
+		dh_minus_eg = float(d * h - e * g)
+		ak_minus_jb = float(a * k - j * b)
+		jc_minus_al = float(j * c - a * l)
+		bl_minus_kc = float(b * l - k * c)
+
+
+		M = a * (ei_minus_hf) + b * (gf_minus_di) + c * (dh_minus_eg)
+
+		t = ((f * (ak_minus_jb) + e * (jc_minus_al) + d * (bl_minus_kc)) * (-1.0)) / M
 
 		if t < 0.0:
 			return False
 
-		gamma = (i * (a * k - j * b) + h * (j * c - a * l) + g * (b * l - k * c)) / M
+		gamma = (i * (ak_minus_jb) + h * (jc_minus_al) + g * (bl_minus_kc)) / M
 
 		if gamma < 0.0 or gamma > 1.0:
 			return False
 
-		beta = (j * (e * i - h * f) + k * (g * f - d * i) + l * (d * h - e * g)) / M
+		beta = (j * (ei_minus_hf) + k * (gf_minus_di) + l * (dh_minus_eg)) / M
 
-		if beta < 0.0 or beta > (1.0 - gamma):
+		if beta < 0.0 or beta > 1.0 - gamma:
 			return False
 
 		center = glm.vec3((self.vertex1.x + self.vertex2.x + self.vertex3.x) / 3.0,
@@ -55,7 +66,8 @@ class Triangle(object):
 			(self.vertex1.z + self.vertex2.z + self.vertex3.z) / 3.0)
 
 		inter_rec.t = t
-		inter_rec.position = my_ray.origin + my_ray.direction * inter_rec.t
+		inter_rec.position = my_ray.origin + glm.multFloatVec3(inter_rec.t, my_ray.direction)
 		inter_rec.normal = glm.normalize(inter_rec.position - center)
+		inter_rec.color = self.color
 
 		return True

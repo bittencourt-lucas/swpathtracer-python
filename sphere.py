@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import glm
+from random import random
 from math import sqrt
 
 class Sphere(object):
@@ -17,6 +18,7 @@ class Sphere(object):
 		else:
 			self.center = glm.vec3(.0, .0, .0)
 			self.radius = 1.0
+		self.color = glm.vec3(((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0)
 
 	# The intersection function can be found at Peter Shirley's Realistic Ray Tracing
 	def intersect(self, my_ray, inter_rec):
@@ -38,4 +40,6 @@ class Sphere(object):
 
 		inter_rec.position = my_ray.direction * (my_ray.origin + inter_rec.t)
 		inter_rec.normal = glm.normalize(inter_rec.position - self.center)
+		inter_rec.color = self.color
+
 		return True

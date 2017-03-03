@@ -79,6 +79,10 @@ class vec3(object):
 		else:
 			return vec3(self.x * value, self.y * value, self.z * value)
 		
+# Another Option for Multiplying Vec3 and Floats
+def multFloatVec3(value, vector):
+	return vec3(value * vector.x, value * vector.y, value * vector.z)
+
 # Cross Product of Two vec3 Objects
 def cross(first, second):
 	return vec3(

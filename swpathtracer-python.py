@@ -2,6 +2,7 @@
 
 import camera
 import ortographic_camera as oc
+import perspective_camera as pc
 import scene
 import buffer
 import raytracer
@@ -13,7 +14,7 @@ y_res = 512
 
 # Creating the Ortographic Camera
 cam_parameters = camera.Camera(glm.ivec2(x_res, y_res), glm.vec3(0.0, 0.0, 1.0), glm.vec3(0.0, 1.0, 0.0), glm.vec3(0.0, 0.0, -1.0))
-my_camera = oc.OrtographicCamera(-1.25, 1.25, -1.25, 1.25, cam_parameters)
+my_camera = pc.PerspectiveCamera(-1.25, 1.25, -1.25, 1.25, cam_parameters)
 
 # Creating and loading hardcoded Scene
 my_scene = scene.Scene()
