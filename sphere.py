@@ -13,12 +13,16 @@ class Sphere(object):
 		if kwargs:
 			self.center = kwargs.get('center', glm.vec3(.0, .0, .0))
 			self.radius = kwargs.get('radius', 0.0)
+			self.color = kwargs.get('color', glm.vec3(.0, .0, .0))
 		elif args:
-			self.center, self.radius = args
+			self.center, self.radius, self.color = args
 		else:
 			self.center = glm.vec3(.0, .0, .0)
 			self.radius = 1.0
-		self.color = glm.vec3(((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0)
+			self.color = glm.vec3(.0, .0, .0)
+
+		# RANDOM COLOR GENERATOR
+		# self.color = glm.vec3(((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0)
 
 	# The intersection function can be found at Peter Shirley's Realistic Ray Tracing
 	def intersect(self, my_ray, inter_rec):

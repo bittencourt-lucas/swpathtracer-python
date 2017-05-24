@@ -21,13 +21,15 @@ class RayTracer(object):
 			self.camera = kwargs.get('camera', camera.Camera()) 
 			self.scene = kwargs.get('scene', scene.Scene())
 			self.background_color = kwargs.get('background_color', glm.vec3(.0, .0, .0))
+			self.samples = kwargs.get('samples', 1)
 			self.buffer = kwargs.get('buffer', buffer.Buffer())
 		elif args:
-			self.camera, self.scene, self.background_color, self.buffer = args
+			self.camera, self.scene, self.background_color, self.samples, self.buffer = args
 		else:
 			self.camera = camera.Camera()
 			self.scene = scene.Scene()
 			self.background_color = glm.vec3(.0, .0, .0)
+			self.samples = 1
 			self.buffer = buffer.Buffer()
 
 	# This will render the image
@@ -41,11 +43,18 @@ class RayTracer(object):
 			sys.stdout.write(progress)
 			backspace(len(progress))
 			sys.stdout.flush()
+
+			# Now rendering multiple samples per pixel (Antialiasing)
 			for x in range(self.buffer.h_resolution):
-				inter_rec.t = sys.float_info.max
-				my_ray = self.camera.getWorldSpaceRay(glm.vec2(x + 0.5, y + 0.5))
-				if self.scene.intersect(my_ray, inter_rec):
-					self.buffer.buffer_data[x][y] = inter_rec.color
+				antialiasing = glm.vec3(.0, .0, .0)
+				inter_rec.color = glm.vec3(.0, .0, .0)
+				for sample in range(self.samples):
+					inter_rec.t = sys.float_info.max
+					my_ray = self.camera.getWorldSpaceRay(glm.vec2(x + random(), y + random()))
+					if self.scene.intersect(my_ray, inter_rec):
+						inter_rec.color = glm.vec3(inter_rec.color.x * (1 / (inter_rec.t * 0.5)), inter_rec.color.y * (1 / (inter_rec.t * 0.5)), inter_rec.color.z * (1 / (inter_rec.t * 0.5)))
+						antialiasing = glm.vec3(antialiasing.x + inter_rec.color.x, antialiasing.y + inter_rec.color.y, antialiasing.z + inter_rec.color.z)
+				self.buffer.buffer_data[x][y] = glm.vec3(antialiasing.x / self.samples, antialiasing.y / self.samples, antialiasing.z / self.samples)
 		print("\nDONE!", file=sys.stderr)
 
 # This function is merely updating the progress text on the Terminal

@@ -13,13 +13,17 @@ class Triangle(object):
 			self.vertex1 = kwargs.get('vertex1', glm.vec3(.0, .0, .0))
 			self.vertex2 = kwargs.get('vertex2', glm.vec3(.0, .0, .0))
 			self.vertex3 = kwargs.get('vertex3', glm.vec3(.0, .0, .0))
+			self.color = kwargs.get('color', glm.vec3(.0, .0, .0))
 		elif args:
-			self.vertex1, self.vertex2, self.vertex3 = args
+			self.vertex1, self.vertex2, self.vertex3, self.color = args
 		else:
 			self.vertex1 = glm.vec3(.0, .0, .0)
 			self.vertex2 = glm.vec3(.0, .0, .0)
 			self.vertex3 = glm.vec3(.0, .0, .0)
-		self.color = glm.vec3(((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0)
+			self.color = glm.vec3(.0, .0, .0)
+
+		# RANDOM COLOR GENERATOR
+		# self.color = glm.vec3(((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0)
 
 	# The intersection function can be found at Peter Shirley's Realistic Ray Tracing
 	def intersect(self, my_ray, inter_rec):

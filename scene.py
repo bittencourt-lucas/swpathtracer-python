@@ -37,8 +37,8 @@ class Scene(object):
 
 	def load(self):
 		# Blender Monkey
-		load_model = models.Models("monkey.obj")
-		self.create_model(load_model, glm.vec3(0.0, 0.0, -2.0))
+		# load_model = models.Models("CornellBox-Original.obj")
+		# self.create_model(load_model, glm.vec3(0.0, 0.0, -2.0))
 
 		# First Scene: FOUR SPHERE
 		# self.primitives.append(sphere.Sphere(glm.vec3(0.0, 0.0, 0.0), 0.2))
@@ -61,3 +61,23 @@ class Scene(object):
 		# self.primitives.append(triangle.Triangle(glm.vec3(-0.2, 0.3, -2.0), glm.vec3(-0.4, 0.0, -2.0), glm.vec3(0.0, 0.0, -2.0)))
 		# self.primitives.append(triangle.Triangle(glm.vec3(-0.2, 0.3, -2.5), glm.vec3(-0.4, 0.0, -2.5), glm.vec3(0.0, 0.0, -2.5)))
 		# self.primitives.append(triangle.Triangle(glm.vec3(-0.2, 0.3, -3.0), glm.vec3(-0.4, 0.0, -3.0), glm.vec3(0.0, 0.0, -3.0)))
+
+		# Pathtracer Scene: CORNELL BOX WITH SPHERES
+		# BACK
+		self.primitives.append(triangle.Triangle(glm.vec3(-1.2, -1.2, -2.5), glm.vec3(1.3, -1.2, -2.5), glm.vec3(-1.2, 1.3, -2.5), glm.vec3(1.0, 1.0, 1.0)))
+		self.primitives.append(triangle.Triangle(glm.vec3(1.3, 1.3, -2.5), glm.vec3(1.3, -1.2, -2.5), glm.vec3(-1.2, 1.3, -2.5), glm.vec3(1.0, 1.0, 1.0)))
+		# FLOOR
+		self.primitives.append(triangle.Triangle(glm.vec3(-1.2, -1.2, -2.5), glm.vec3(1.3, -1.2, -2.5), glm.vec3(-1.2, -1.0, -1.0), glm.vec3(1.0, 1.0, 1.0)))
+		self.primitives.append(triangle.Triangle(glm.vec3(-1.2, -1.0, -1.0), glm.vec3(1.3, -1.2, -2.5), glm.vec3(1.3, -1.0, -1.0), glm.vec3(1.0, 1.0, 1.0)))
+ 		# LEFT WALL
+		self.primitives.append(triangle.Triangle(glm.vec3(-1.2, -1.2, -2.5), glm.vec3(-1.2, -1.0, -1.0), glm.vec3(-1.1999, 1.3, -2.5), glm.vec3(1.0, 0.0, 0.0)))
+		self.primitives.append(triangle.Triangle(glm.vec3(-1.1999, 1.3, -2.5), glm.vec3(-1.2, -1.0, -1.0), glm.vec3(-1.2, 1.3, -1.0), glm.vec3(1.0, 0.0, 0.0)))
+		# RIGHT WALL
+		self.primitives.append(triangle.Triangle(glm.vec3(1.2999, 1.3, -2.5), glm.vec3(1.3, -1.0, -1.0), glm.vec3(1.3, -1.2, -2.5), glm.vec3(0.0, 1.0, 0.0)))
+		self.primitives.append(triangle.Triangle(glm.vec3(1.2999, 1.3, -2.5), glm.vec3(1.3, -1.0, -1.0), glm.vec3(1.3, 1.3001, -1.0), glm.vec3(0.0, 1.0, 0.0)))
+		# CEILING
+		self.primitives.append(triangle.Triangle(glm.vec3(-1.2, 1.3001, -1.0), glm.vec3(-1.1999, 1.3, -2.5), glm.vec3(1.2999, 1.3, -2.5), glm.vec3(1.0, 1.0, 1.0)))
+		self.primitives.append(triangle.Triangle(glm.vec3(1.2999, 1.3001, -2.5), glm.vec3(1.3, 1.2999, -1.0), glm.vec3(-1.2, 1.2999, -1.0), glm.vec3(1.0, 1.0, 1.0)))
+		# SPHERES
+		self.primitives.append(sphere.Sphere(glm.vec3(-0.5, -0.65, -1.5), 0.4, glm.vec3(1.0, 1.0, 1.0)))
+		self.primitives.append(sphere.Sphere(glm.vec3(0.6, -0.65, -1.8), 0.4, glm.vec3(1.0, 1.0, 1.0)))
