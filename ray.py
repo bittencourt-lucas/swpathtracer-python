@@ -10,9 +10,9 @@ class Ray(object):
 	def __init__(self, *args, **kwargs):
 		if kwargs:
 			self.origin = kwargs.get('origin', glm.vec3(.0, .0, .0))
-			self.direction = kwargs.get('direction', glm.vec3(.0, .0, .0))
+			self.direction = kwargs.get('direction', glm.vec3(.0, .0, -1.0))
 		elif args:
 			self.origin, self.direction = args
 		else:
 			self.origin = glm.vec3(.0, .0, .0)
-			self.direction = glm.vec3(.0, .0, .0)
+			self.direction = glm.vec3(.0, .0, -1.0)

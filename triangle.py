@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import glm
+import material
 from random import random
+from math import pi
 
 class Triangle(object):
 	"""
@@ -13,19 +15,15 @@ class Triangle(object):
 			self.vertex1 = kwargs.get('vertex1', glm.vec3(.0, .0, .0))
 			self.vertex2 = kwargs.get('vertex2', glm.vec3(.0, .0, .0))
 			self.vertex3 = kwargs.get('vertex3', glm.vec3(.0, .0, .0))
-			self.color = kwargs.get('color', glm.vec3(.0, .0, .0))
+			self.material = kwargs.get('material', material.Material())
 		elif args:
-			self.vertex1, self.vertex2, self.vertex3, self.color = args
+			self.vertex1, self.vertex2, self.vertex3, self.material = args
 		else:
 			self.vertex1 = glm.vec3(.0, .0, .0)
 			self.vertex2 = glm.vec3(.0, .0, .0)
 			self.vertex3 = glm.vec3(.0, .0, .0)
-			self.color = glm.vec3(.0, .0, .0)
+			self.material = material.Material()
 
-		# RANDOM COLOR GENERATOR
-		# self.color = glm.vec3(((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0)
-
-	# The intersection function can be found at Peter Shirley's Realistic Ray Tracing
 	def intersect(self, my_ray, inter_rec):
 		a = self.vertex1.x - self.vertex2.x
 		b = self.vertex1.y - self.vertex2.y
@@ -50,7 +48,7 @@ class Triangle(object):
 
 		M = a * (ei_minus_hf) + b * (gf_minus_di) + c * (dh_minus_eg)
 
-		t = ((f * (ak_minus_jb) + e * (jc_minus_al) + d * (bl_minus_kc)) * (-1.0)) / M
+		t = -(f * (ak_minus_jb) + e * (jc_minus_al) + d * (bl_minus_kc)) / M
 
 		if t < 0.0:
 			return False
@@ -65,13 +63,11 @@ class Triangle(object):
 		if beta < 0.0 or beta > 1.0 - gamma:
 			return False
 
-		center = glm.vec3((self.vertex1.x + self.vertex2.x + self.vertex3.x) / 3.0,
-			(self.vertex1.y + self.vertex2.y + self.vertex3.y) / 3.0,
-			(self.vertex1.z + self.vertex2.z + self.vertex3.z) / 3.0)
-
 		inter_rec.t = t
-		inter_rec.position = my_ray.origin + glm.multFloatVec3(inter_rec.t, my_ray.direction)
-		inter_rec.normal = glm.normalize(inter_rec.position - center)
-		inter_rec.color = self.color
+		inter_rec.position = my_ray.origin + inter_rec.t * my_ray.direction
+		inter_rec.normal = glm.normalize(glm.cross(self.vertex2 - self.vertex1, self.vertex3 - self.vertex1))
+		if glm.dot(inter_rec.normal, my_ray.direction) > 0:
+			inter_rec.normal = -inter_rec.normal
+		inter_rec.material = self.material
 
 		return True

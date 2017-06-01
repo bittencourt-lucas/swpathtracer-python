@@ -58,8 +58,19 @@ class vec3(object):
 			self.y = .0
 			self.z = .0
 
+	# Handling Negative Unary of vec3 Objects:
+	def __neg__(self):
+		return vec3(self.x * (-1), self.y * (-1), self.z * (-1))
+
 	# Handling Addition of vec3 Objects:
 	def __add__(self, value):
+		if isinstance(value, vec3):
+			return vec3(self.x + value.x, self.y + value.y, self.z + value.z)
+		else:
+			return vec3(self.x + value, self.y + value, self.z + value)
+
+	# Handling Reverse Addition of vec3 Objects:
+	def __radd__(self, value):
 		if isinstance(value, vec3):
 			return vec3(self.x + value.x, self.y + value.y, self.z + value.z)
 		else:
@@ -72,38 +83,54 @@ class vec3(object):
 		else:
 			return vec3(self.x - value, self.y - value, self.z - value)
 
+	# Handling Reverse Subtraction of vec3 Objects:
+	def __rsub__(self, value):
+		if isinstance(value, vec3):
+			return vec3(value.x - self.x, value.y - self.y, value.z - self.z)
+		else:
+			return vec3(value - self.x, value - self.y, value - self.z)
+
 	# Handling Multiplication of vec3 Objects:
 	def __mul__(self, value):
 		if isinstance(value, vec3):
 			return vec3(self.x * value.x, self.y * value.y, self.z * value.z)
 		else:
 			return vec3(self.x * value, self.y * value, self.z * value)
-		
-# Another Option for Multiplying Vec3 and Floats
-def multFloatVec3(value, vector):
-	return vec3(value * vector.x, value * vector.y, value * vector.z)
+
+	# Handling Reverse Multiplication of vec3 Objects:
+	def __rmul__(self, value):
+		if isinstance(value, vec3):
+			return vec3(self.x * value.x, self.y * value.y, self.z * value.z)
+		else:
+			return vec3(self.x * value, self.y * value, self.z * value)
+
+	# Handling Division of vec3 Objects:
+	def __truediv__(self, value):
+		if isinstance(value, vec3):
+			return vec3(self.x / value.x, self.y / value.y, self.z / value.z)
+		else:
+			return vec3(self.x / value, self.y / value, self.z / value)
+
+	# Handling Reverse Division of vec3 Objects:
+	def __rtruediv__(self, value):
+		if isinstance(value, vec3):
+			return vec3(value.x / self.x, value.y / self.y, value.z / self.z)
+		else:
+			return vec3(value / self.x, value / self.y, value / self.z)
 
 # Cross Product of Two vec3 Objects
 def cross(first, second):
 	return vec3(
-		first.y * second.z - second.y * first.z,
-		first.z * second.x - second.z * first.x,
-		first.x * second.y - second.y * first.x)
+		first.y * second.z - first.z * second.y,
+		first.z * second.x - first.x * second.z,
+		first.x * second.y - first.y * second.x)
 
 # Dot Product of Two vec3 Objects
 def dot(first, second):
 	if isinstance(first, float) and isinstance(second, float):
 		return first * second
 	elif isinstance(first, vec3) and isinstance(second, vec3):
-		dotproduct = first * second
-		return dotproduct.x + dotproduct.y + dotproduct.z
-
-# Inverse Square Root (used on normalize())
-def inversesqrt(value):
-	if isinstance(value, float):
-		return (1.0 / sqrt(value))
-	elif isinstance(value, vec3):
-		return vec3((1.0 / sqrt(value.x)), (1.0 / sqrt(value.y)), (1.0 / sqrt(value.z)))
+		return first.x * second.x + first.y * second.y + first.z * second.z
 
 # Normalization of a vec3 Object
 def normalize(value):
@@ -112,5 +139,5 @@ def normalize(value):
 			return -1.0
 		return 1.0
 	elif isinstance(value, vec3):
-		result = value.x * value.x + value.y * value.y + value.z * value.z
-		return value * inversesqrt(result)
+		magnitude = sqrt(value.x ** 2 + value.y ** 2 + value.z ** 2)
+		return value / magnitude

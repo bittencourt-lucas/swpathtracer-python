@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import glm
+import material
 from random import random
 from math import sqrt
+from math import pi
 
 class Sphere(object):
 	"""
@@ -13,22 +15,19 @@ class Sphere(object):
 		if kwargs:
 			self.center = kwargs.get('center', glm.vec3(.0, .0, .0))
 			self.radius = kwargs.get('radius', 0.0)
-			self.color = kwargs.get('color', glm.vec3(.0, .0, .0))
+			self.material = kwargs.get('material', material.Material())
 		elif args:
-			self.center, self.radius, self.color = args
+			self.center, self.radius, self.material = args
 		else:
 			self.center = glm.vec3(.0, .0, .0)
 			self.radius = 1.0
-			self.color = glm.vec3(.0, .0, .0)
-
-		# RANDOM COLOR GENERATOR
-		# self.color = glm.vec3(((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0, ((random() * 255) % 255) / 255.0)
+			self.material = material.Material()
 
 	# The intersection function can be found at Peter Shirley's Realistic Ray Tracing
 	def intersect(self, my_ray, inter_rec):
-		eo = (my_ray.origin * (-1)) + self.center
+		eo = self.center - my_ray.origin
 		v = glm.dot(eo, my_ray.direction)
-		disc = (self.radius ** 2) - (glm.dot(eo, eo) - (v ** 2))
+		disc = (self.radius * self.radius) - (glm.dot(eo, eo) - (v * v))
 
 		if disc < 0.0:
 			return False
@@ -42,8 +41,8 @@ class Sphere(object):
 		else:
 			inter_rec.t = t2
 
-		inter_rec.position = my_ray.direction * (my_ray.origin + inter_rec.t)
+		inter_rec.position = my_ray.origin + inter_rec.t * my_ray.direction
 		inter_rec.normal = glm.normalize(inter_rec.position - self.center)
-		inter_rec.color = self.color
+		inter_rec.material = self.material
 
 		return True

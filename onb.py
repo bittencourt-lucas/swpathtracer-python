@@ -48,3 +48,6 @@ class ONB(object):
 			return glm.vec3((self.mat3x3[0][0] * value.x + self.mat3x3[0][1] * value.y + self.mat3x3[0][2] * value.z),
 				(self.mat3x3[1][0] * value.x + self.mat3x3[1][1] * value.y + self.mat3x3[1][2] * value.z),
 				(self.mat3x3[2][0] * value.x + self.mat3x3[2][1] * value.y + self.mat3x3[2][2] * value.z))
+
+	def transpose(self):
+		self.mat3x3 = [[self.u.x, self.v.x, self.w.x], [self.u.y, self.v.y, self.w.y], [self.u.z, self.v.z, self.w.z]]

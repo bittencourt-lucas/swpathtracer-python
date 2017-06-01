@@ -2,6 +2,7 @@
 
 import triangle
 import glm
+import material
 import pyassimp
 import pyassimp.postprocess
 
@@ -31,6 +32,6 @@ class Models(object):
 						vertex[2].x = mesh.vertices[face[2], 0]
 						vertex[2].y = mesh.vertices[face[2], 1]
 						vertex[2].z = mesh.vertices[face[2], 2]
-						self.triangles.append(triangle.Triangle(glm.vec3(vertex[0].x, vertex[0].y, vertex[0].z), glm.vec3(vertex[1].x, vertex[1].y, vertex[1].z), glm.vec3(vertex[2].x, vertex[2].y, vertex[2].z)))
+						self.triangles.append(triangle.Triangle(glm.vec3(vertex[0].x, vertex[0].y, vertex[0].z), glm.vec3(vertex[1].x, vertex[1].y, vertex[1].z), glm.vec3(vertex[2].x, vertex[2].y, vertex[2].z), material.Material()))
 
 			self.done = True
